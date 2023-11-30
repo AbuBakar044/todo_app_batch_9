@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app_batch_9/constants/constants.dart';
+import 'package:todo_app_batch_9/controllers/auth/auth_controller.dart';
 import 'package:todo_app_batch_9/utils/colors.dart';
 import 'package:todo_app_batch_9/widgets/my_text.dart';
 
 class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final authCtrl = Get.put<AuthController>(AuthController());
     return Scaffold(
       body: Container(
         height: Get.height,
@@ -94,9 +96,9 @@ class RegisterPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle login logic here
+                    authCtrl.registerUserWithFirebase('abc@email.com', '123456');
                   },
-                  child: const Text('Login'),
+                  child: const Text('Signup'),
                 ),
                 const SizedBox(height: 10),
                 TextButton(
