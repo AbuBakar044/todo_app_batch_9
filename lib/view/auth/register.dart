@@ -17,97 +17,110 @@ class RegisterPage extends StatelessWidget {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MyText(
-                  text: 'Register',
-                  color: kWhiteColor,
-                  size: 32,
-                  weight: FontWeight.bold,
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Full Name',
-                    labelStyle: TextStyle(
-                      color: kWhiteColor,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
+            child: Form(
+              key: authCtrl.registerFormKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const MyText(
+                    text: 'Register',
+                    color: kWhiteColor,
+                    size: 32,
+                    weight: FontWeight.bold,
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: authCtrl.fullNameCtrl,
+                    validator: customValidator,
+                    decoration: InputDecoration(
+                      labelText: 'Full Name',
+                      labelStyle: const TextStyle(
                         color: kWhiteColor,
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        20.0,
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: kWhiteColor,
+                        ),
                       ),
-                      borderSide: BorderSide(
-                        color: Colors.yellow,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                          20.0,
+                        ),
+                        borderSide: const BorderSide(
+                          color: Colors.yellow,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: TextStyle(
-                      color: kWhiteColor,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: authCtrl.emailCtrl,
+                    validator: customValidator,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: const TextStyle(
                         color: kWhiteColor,
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        20.0,
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: kWhiteColor,
+                        ),
                       ),
-                      borderSide: BorderSide(
-                        color: Colors.yellow,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                          20.0,
+                        ),
+                        borderSide: const BorderSide(
+                          color: Colors.yellow,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(
-                      color: kWhiteColor,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: authCtrl.passCtrl,
+                    validator: customValidator,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: const TextStyle(
                         color: kWhiteColor,
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        20.0,
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: kWhiteColor,
+                        ),
                       ),
-                      borderSide: BorderSide(
-                        color: Colors.yellow,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                          20.0,
+                        ),
+                        borderSide: const BorderSide(
+                          color: Colors.yellow,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    authCtrl.registerUserWithFirebase('abc@email.com', '123456');
-                  },
-                  child: const Text('Signup'),
-                ),
-                const SizedBox(height: 10),
-                TextButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: const Text('Back to Login'),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (authCtrl.registerFormKey.currentState!.validate()) {
+                        authCtrl.registerUserWithFirebase(
+                            'abc@email.com', '123456');
+                      }
+                      
+                    },
+                    child: const Text('Signup'),
+                  ),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: const Text('Back to Login'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

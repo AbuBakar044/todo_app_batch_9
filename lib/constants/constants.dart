@@ -21,3 +21,9 @@ LinearGradient appGradient() {
     ],
   );
 }
+
+String? customValidator(String? val) {
+  if (val!.isEmpty) {
+    return '*please fill this field';
+  }
+}
