@@ -32,6 +32,7 @@ class RegisterPage extends StatelessWidget {
                   TextFormField(
                     controller: authCtrl.fullNameCtrl,
                     validator: customValidator,
+                    style: TextStyle(color: kWhiteColor),
                     decoration: InputDecoration(
                       labelText: 'Full Name',
                       labelStyle: const TextStyle(
@@ -56,6 +57,7 @@ class RegisterPage extends StatelessWidget {
                   TextFormField(
                     controller: authCtrl.emailCtrl,
                     validator: customValidator,
+                    style: TextStyle(color: kWhiteColor),
                     decoration: InputDecoration(
                       labelText: 'Email',
                       labelStyle: const TextStyle(
@@ -81,6 +83,7 @@ class RegisterPage extends StatelessWidget {
                     controller: authCtrl.passCtrl,
                     validator: customValidator,
                     obscureText: true,
+                    style: TextStyle(color: kWhiteColor),
                     decoration: InputDecoration(
                       labelText: 'Password',
                       labelStyle: const TextStyle(
@@ -106,9 +109,11 @@ class RegisterPage extends StatelessWidget {
                     onPressed: () {
                       if (authCtrl.registerFormKey.currentState!.validate()) {
                         authCtrl.registerUserWithFirebase(
-                            'abc@email.com', '123456');
+                          authCtrl.fullNameCtrl.text,
+                          authCtrl.emailCtrl.text,
+                          authCtrl.passCtrl.text,
+                        );
                       }
-                      
                     },
                     child: const Text('Signup'),
                   ),

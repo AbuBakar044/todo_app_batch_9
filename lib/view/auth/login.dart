@@ -84,7 +84,7 @@ class LoginPage extends StatelessWidget {
                       // Handle login logic here
                       if (authCtrl.loginFormKey.currentState!.validate()) {
                          authCtrl.loginUserWithFirebase(
-                            'abc@email.com', '123456');
+                            authCtrl.emailCtrl.text, authCtrl.passCtrl.text);
                       }
                     },
                     child: const Text('Login'),

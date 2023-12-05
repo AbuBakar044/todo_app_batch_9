@@ -4,7 +4,8 @@ import '../utils/colors.dart';
 
 const kAppName = 'Todoi';
 const kAppLogo = 'assets/images/logo.png';
-
+const kUserCollection = 'users';
+const kTodosCollection = 'todos';
 //App Gradient
 
 LinearGradient appGradient() {
