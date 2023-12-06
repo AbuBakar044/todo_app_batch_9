@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:todo_app_batch_9/controllers/home_controller.dart';
 import 'package:todo_app_batch_9/widgets/my_text.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,9 +8,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    final homeCtrl = Get.put<HomeController>(HomeController());
+    return Scaffold(
       appBar: AppBar(
-        title: MyText(text: 'Home Screen'),
+        title: const MyText(text: 'Home Screen'),
+      ),
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            homeCtrl.logoutUser();
+          },
+          child: const MyText(text: 'Logout'),
+        ),
       ),
     );
   }
