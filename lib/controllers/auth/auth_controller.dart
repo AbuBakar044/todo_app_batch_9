@@ -5,10 +5,16 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app_batch_9/constants/constants.dart';
 import 'package:todo_app_batch_9/view/home/home_screen,.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  GoogleSignInAccount? googleSignInAccount;
+  GoogleSignInAuthentication? googleSignInAuthentication;
+  AuthCredential? authCredential;
+  UserCredential? userCredential;
 
   final fullNameCtrl = TextEditingController();
   final emailCtrl = TextEditingController();
@@ -70,5 +76,21 @@ class AuthController extends GetxController {
   Future<void> saveUserDataLocallyy(String userId) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString('user', userId);
+  }
+
+  Future<void> signInUserWithGoogle() async {
+    googleSignInAccount = await googleSignIn.signIn();
+
+    if (googleSignInAccount != null) {
+      googleSignInAuthentication = await googleSignInAccount!.authentication;
+
+      authCredential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication!.accessToken,
+          idToken: googleSignInAuthentication!.idToken);
+
+      try {
+        firebaseAuth.signInWithCredential(authCredential!);
+      } catch (e) {}
+    }
   }
 }

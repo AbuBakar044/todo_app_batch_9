@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 20),
                   TextFormField(
                     controller: authCtrl.emailCtrl,
-                   validator: customValidator,
+                    validator: customValidator,
                     decoration: InputDecoration(
                       labelText: 'Email',
                       labelStyle: const TextStyle(
@@ -83,11 +83,23 @@ class LoginPage extends StatelessWidget {
                     onPressed: () {
                       // Handle login logic here
                       if (authCtrl.loginFormKey.currentState!.validate()) {
-                         authCtrl.loginUserWithFirebase(
+                        authCtrl.loginUserWithFirebase(
                             authCtrl.emailCtrl.text, authCtrl.passCtrl.text);
                       }
                     },
                     child: const Text('Login'),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Handle login logic here
+                      // if (authCtrl.loginFormKey.currentState!.validate()) {
+                      //   authCtrl.loginUserWithFirebase(
+                      //       authCtrl.emailCtrl.text, authCtrl.passCtrl.text);
+                      // }
+                      authCtrl.signInUserWithGoogle();
+                    },
+                    child: const Text('Continue With Google'),
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -99,7 +111,6 @@ class LoginPage extends StatelessWidget {
                           child: TextButton(
                             onPressed: () {
                               // Handle forgot password logic here
-                             
                             },
                             child: const MyText(
                               text: 'Forgot Password?',
