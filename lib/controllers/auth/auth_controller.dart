@@ -28,6 +28,7 @@ class AuthController extends GetxController {
     firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) {
+      saveUserDataLocallyy(value.user!.uid);
       saveUserData(value.user!.uid, fullName, email, password).then((value) {
         Get.snackbar(
           kAppName,

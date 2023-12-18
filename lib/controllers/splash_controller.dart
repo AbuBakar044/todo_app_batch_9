@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app_batch_9/view/auth/login.dart';
+import 'package:todo_app_batch_9/view/bottom_bar_screen.dart';
 import 'package:todo_app_batch_9/view/home/home_screen,.dart';
 
 class SplashController extends GetxController {
@@ -18,7 +19,7 @@ class SplashController extends GetxController {
 
     if (sharedPreferences.containsKey('user')) {
       Get.offAll(
-        () => const HomeScreen(),
+        () => const BottomBarScreen(),
         transition: Transition.fade,
         duration: const Duration(
           milliseconds: 500,
