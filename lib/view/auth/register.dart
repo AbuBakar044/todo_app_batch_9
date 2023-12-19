@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app_batch_9/constants/constants.dart';
 import 'package:todo_app_batch_9/controllers/auth/auth_controller.dart';
 import 'package:todo_app_batch_9/utils/colors.dart';
@@ -122,7 +123,7 @@ class RegisterPage extends StatelessWidget {
                     onPressed: () {
                       Get.back();
                     },
-                    child: const Text('Back to Login'),
+                    child:  Text('Back to Login', ),
                   ),
                 ],
               ),

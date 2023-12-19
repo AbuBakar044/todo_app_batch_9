@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/colors.dart';
 
@@ -6,6 +7,11 @@ const kAppName = 'Todoi';
 const kAppLogo = 'assets/images/logo.png';
 const kUserCollection = 'users';
 const kTodosCollection = 'todos';
+
+//Fonts
+
+ String? kFreedokaFont = GoogleFonts.fredoka().fontFamily;
+
 //App Gradient
 
 LinearGradient appGradient() {
