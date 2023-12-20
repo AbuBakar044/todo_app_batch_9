@@ -12,42 +12,36 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put<SplashController>(SplashController());
     return Scaffold(
-        body: Container(
-      height: Get.height,
-      width: Get.width,
-      decoration: BoxDecoration(
-        //color: kSecondaryColor,
-        gradient: appGradient(),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Center(
-              child: Image.asset(
-                kAppLogo,
-                height: 85.0,
-                width: 85.0,
+        body: bgContainer(
+          child: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Center(
+                  child: Image.asset(
+                    kAppLogo,
+                    height: 85.0,
+                    width: 85.0,
+                  ),
+                ),
               ),
-            ),
+              const Positioned(
+                bottom: 20.0,
+                left: 0,
+                right: 0,
+                child: Center(
+                    child: MyText(
+                  text: 'Powered By: Todoi',
+                  color: kWhiteColor,
+                  size: 15.0,
+                  weight: FontWeight.bold,
+                )),
+              ),
+            ],
           ),
-          const Positioned(
-            bottom: 20.0,
-            left: 0,
-            right: 0,
-            child: Center(
-                child: MyText(
-              text: 'Powered By: Todoi',
-              color: kWhiteColor,
-              size: 15.0,
-              weight: FontWeight.bold,
-            )),
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 }

@@ -18,12 +18,7 @@ class HomeScreen extends StatelessWidget {
       //   centerTitle: true,
       //   backgroundColor: Colors.transparent,
       // ),
-      body: Container(
-        height: Get.height,
-        width: Get.width,
-        decoration: BoxDecoration(
-          gradient: appGradient(),
-        ),
+      body: bgContainer(
         child: SafeArea(
           child: Column(
             children: [

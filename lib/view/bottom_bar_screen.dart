@@ -21,7 +21,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         controller: _pageController,
         children: [
           HomeScreen(),
-          CreateToDoScreen(),
+          CreateTodoScreen(),
           CalenderScreen(),
         ],
         onPageChanged: (index) {

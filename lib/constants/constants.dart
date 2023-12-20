@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/colors.dart';
@@ -10,7 +11,7 @@ const kTodosCollection = 'todos';
 
 //Fonts
 
- String? kFreedokaFont = GoogleFonts.fredoka().fontFamily;
+String? kFreedokaFont = GoogleFonts.fredoka().fontFamily;
 
 //App Gradient
 
@@ -33,4 +34,13 @@ String? customValidator(String? val) {
   if (val!.isEmpty) {
     return '*please fill this field';
   }
+}
+
+Widget bgContainer({Widget? child}) {
+  return Container(
+    height: Get.height,
+    width: Get.width,
+    decoration: BoxDecoration(gradient: appGradient()),
+    child: child,
+  );
 }
