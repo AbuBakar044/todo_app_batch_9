@@ -5,6 +5,7 @@ import 'package:todo_app_batch_9/controllers/createtodo/create_todo_controller.d
 
 import '../../utils/colors.dart';
 import '../../widgets/my_text.dart';
+import '../bottom_bar_screen.dart';
 
 class CreateTodoScreen extends StatefulWidget {
   CreateTodoScreen({super.key});
@@ -14,10 +15,6 @@ class CreateTodoScreen extends StatefulWidget {
 }
 
 class _CreateTodoScreenState extends State<CreateTodoScreen> {
-  final TextEditingController titleController = TextEditingController();
-
-  final TextEditingController descriptionController = TextEditingController();
-
   final creatTodoCtrl = Get.put<CreateToDoController>(CreateToDoController());
 
   @override
@@ -62,27 +59,49 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextFormField(
-                      controller: titleController,
-                      decoration: InputDecoration(labelText: 'Title'),
+                      controller: creatTodoCtrl.titleController,
+                      style: const TextStyle(
+                        color: kWhiteColor,
+                      ),
+                      decoration: const InputDecoration(
+                          labelText: 'Title',
+                          labelStyle: TextStyle(
+                            color: kWhiteColor,
+                          )),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextFormField(
-                      controller: descriptionController,
-                      decoration: InputDecoration(labelText: 'Description'),
+                      maxLines: 1,
+                      controller: creatTodoCtrl.descriptionController,
+                      style: const TextStyle(
+                        color: kWhiteColor,
+                      ),
+                      decoration: const InputDecoration(
+                          labelText: 'Description',
+                          labelStyle: TextStyle(
+                            color: kWhiteColor,
+                          )),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
                         // Add your logic to create the todo here
-                        String title = titleController.text;
-                        String description = descriptionController.text;
+                        String title = creatTodoCtrl.titleController.text;
+                        String description =
+                            creatTodoCtrl.descriptionController.text;
 
                         // Validate input (you can add more validation)
                         if (title.isNotEmpty && description.isNotEmpty) {
                           // Create the todo and navigate back
                           // You can use Get.to() or Navigator.push() here
 
-                          creatTodoCtrl.saveTodoToDB(title, description);
+                          creatTodoCtrl
+                              .saveTodoToDB(title, description)
+                              .then((value) {
+                            creatTodoCtrl.titleController.clear();
+                            creatTodoCtrl.descriptionController.clear();
+                            //Get.back();
+                          });
                         } else {
                           Get.snackbar(
                             'Validation Error',
@@ -91,7 +110,7 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
                           );
                         }
                       },
-                      child: Text('Create Todo'),
+                      child: const Text('Create Todo'),
                     ),
                   ],
                 ),

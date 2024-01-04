@@ -1,9 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app_batch_9/constants/constants.dart';
+import 'package:todo_app_batch_9/view/bottom_bar_screen.dart';
 
 class CreateToDoController extends GetxController {
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  TextEditingController titleController = TextEditingController();
+
+  TextEditingController descriptionController = TextEditingController();
   String? userId;
   @override
   void onInit() {
@@ -18,7 +25,6 @@ class CreateToDoController extends GetxController {
     if (sharedPreferences.containsKey('user')) {
       userId = sharedPreferences.getString('user');
 
-
       print('......................This is User ID $userId');
     }
   }
@@ -28,12 +34,14 @@ class CreateToDoController extends GetxController {
 
     firebaseFirestore
         .collection(kUserCollection)
-        .doc(userId)
-        .update({'todo': FieldValue.arrayUnion([{
-           'title': title,
-           'dessc':desc,
+        .doc(firebaseAuth.currentUser!.uid)
+        .update({
+      'todo': FieldValue.arrayUnion([
+        {
+          'title': title,
+          'dessc': desc,
         }
-         
-        ])});
+      ])
+    });
   }
 }

@@ -7,6 +7,8 @@ import 'package:todo_app_batch_9/constants/constants.dart';
 import 'package:todo_app_batch_9/view/home/home_screen,.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../view/bottom_bar_screen.dart';
+
 class AuthController extends GetxController {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -15,6 +17,7 @@ class AuthController extends GetxController {
   GoogleSignInAuthentication? googleSignInAuthentication;
   AuthCredential? authCredential;
   UserCredential? userCredential;
+  bool isHidden = true;
 
   final fullNameCtrl = TextEditingController();
   final emailCtrl = TextEditingController();
@@ -23,19 +26,28 @@ class AuthController extends GetxController {
   final registerFormKey = GlobalKey<FormState>();
   final loginFormKey = GlobalKey<FormState>();
 
+  // Future<void> registerUserWithFirebase(
+  //     String fullName, String email, String password) async {
+  //   firebaseAuth
+  //       .createUserWithEmailAndPassword(email: email, password: password)
+  //       .then((value) {
+  //     //saveUserDataLocallyy(value.user!.uid);
+  //     saveUserData(value.user!.uid, fullName, email, password).then((value) {
+  //       Get.snackbar(
+  //         kAppName,
+  //         'Account created successfully',
+  //         backgroundColor: Colors.green,
+  //       );
+  //     });
+  //   });
+  // }
+
   Future<void> registerUserWithFirebase(
       String fullName, String email, String password) async {
-    firebaseAuth
+    await firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) {
-      saveUserDataLocallyy(value.user!.uid);
-      saveUserData(value.user!.uid, fullName, email, password).then((value) {
-        Get.snackbar(
-          kAppName,
-          'Account created successfully',
-          backgroundColor: Colors.green,
-        );
-      });
+      saveUserData(value.user!.uid, fullName, email, password);
     });
   }
 
@@ -43,12 +55,13 @@ class AuthController extends GetxController {
     firebaseAuth
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) {
-      saveUserDataLocallyy(value.user!.uid);
+      //saveUserDataLocallyy(value.user!.uid);
       Get.snackbar(
         kAppName,
         'LoggedIn Successfully',
         backgroundColor: Colors.green,
       );
+      Get.offAll(() => BottomBarScreen());
     });
   }
 
@@ -67,17 +80,17 @@ class AuthController extends GetxController {
       fullNameCtrl.clear();
       passCtrl.clear();
       emailCtrl.clear();
-      saveUserDataLocallyy(userID);
+      //saveUserDataLocallyy(userID);
       Get.offAll(
-        () => const HomeScreen(),
+        () => const BottomBarScreen(),
       );
     });
   }
 
-  Future<void> saveUserDataLocallyy(String userId) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('user', userId);
-  }
+  // Future<void> saveUserDataLocallyy(String userId) async {
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   sharedPreferences.setString('user', userId);
+  // }
 
   Future<void> signInUserWithGoogle() async {
     googleSignInAccount = await googleSignIn.signIn();
@@ -90,8 +103,16 @@ class AuthController extends GetxController {
           idToken: googleSignInAuthentication!.idToken);
 
       try {
-        firebaseAuth.signInWithCredential(authCredential!);
+        firebaseAuth.signInWithCredential(authCredential!).then((value) {
+          saveUserData(value.user!.uid, value.user!.displayName!,
+              value.user!.email!, authCredential!.accessToken!);
+        });
       } catch (e) {}
     }
+  }
+
+  void changeVisibility() {
+    isHidden = !isHidden;
+    update();
   }
 }

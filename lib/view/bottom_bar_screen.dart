@@ -1,8 +1,9 @@
-import 'package:bottom_bar/bottom_bar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:todo_app_batch_9/view/calender/calneder_screen.dart';
 import 'package:todo_app_batch_9/view/createtodo/create_todo_screen.dart';
 import 'package:todo_app_batch_9/view/home/home_screen,.dart';
+import 'package:todo_app_batch_9/widgets/apna_bottom_bar.dart';
 
 class BottomBarScreen extends StatefulWidget {
   const BottomBarScreen({super.key});
@@ -30,8 +31,9 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           setState(() => _currentPage = index);
         },
       ),
-      bottomNavigationBar: BottomBar(
+      bottomNavigationBar: ApnaBottomBar(
         selectedIndex: _currentPage,
+        
         onTap: (int index) {
           _pageController.jumpToPage(index);
           setState(() => _currentPage = index);

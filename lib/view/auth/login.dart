@@ -11,137 +11,148 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authCtrl = Get.put<AuthController>(AuthController());
     return Scaffold(
-      body: Container(
-        height: Get.height,
-        width: Get.width,
-        decoration: BoxDecoration(gradient: appGradient()),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: authCtrl.loginFormKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const MyText(
-                    text: 'Login',
-                    color: kWhiteColor,
-                    size: 32,
-                    weight: FontWeight.bold,
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: authCtrl.emailCtrl,
-                    validator: customValidator,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: const TextStyle(
-                        color: kWhiteColor,
-                      ),
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(
+      body: GetBuilder<AuthController>(builder: (ctrl) {
+        return Container(
+          height: Get.height,
+          width: Get.width,
+          decoration: BoxDecoration(gradient: appGradient()),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: authCtrl.loginFormKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const MyText(
+                      text: 'Login',
+                      color: kWhiteColor,
+                      size: 32,
+                      weight: FontWeight.bold,
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: authCtrl.emailCtrl,
+                      style: TextStyle(color: kWhiteColor),
+                      validator: customValidator,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: const TextStyle(
                           color: kWhiteColor,
                         ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          20.0,
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: kWhiteColor,
+                          ),
                         ),
-                        borderSide: const BorderSide(
-                          color: Colors.yellow,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    controller: authCtrl.passCtrl,
-                    obscureText: true,
-                    validator: customValidator,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: const TextStyle(
-                        color: kWhiteColor,
-                      ),
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: kWhiteColor,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          20.0,
-                        ),
-                        borderSide: const BorderSide(
-                          color: Colors.yellow,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle login logic here
-                      if (authCtrl.loginFormKey.currentState!.validate()) {
-                        authCtrl.loginUserWithFirebase(
-                            authCtrl.emailCtrl.text, authCtrl.passCtrl.text);
-                      }
-                    },
-                    child: const Text('Login'),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle login logic here
-                      // if (authCtrl.loginFormKey.currentState!.validate()) {
-                      //   authCtrl.loginUserWithFirebase(
-                      //       authCtrl.emailCtrl.text, authCtrl.passCtrl.text);
-                      // }
-                      authCtrl.signInUserWithGoogle();
-                    },
-                    child: const Text('Continue With Google'),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: TextButton(
-                            onPressed: () {
-                              // Handle forgot password logic here
-                            },
-                            child: const MyText(
-                              text: 'Forgot Password?',
-                              size: 12.0,
-                            ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            20.0,
+                          ),
+                          borderSide: const BorderSide(
+                            color: Colors.yellow,
                           ),
                         ),
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
+                    ),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      controller: authCtrl.passCtrl,
+                      obscureText: ctrl.isHidden,
+                      style: TextStyle(color: kWhiteColor),
+                      validator: customValidator,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        labelStyle: const TextStyle(
+                          color: kWhiteColor,
+                        ),
+                        suffixIcon: IconButton(
                             onPressed: () {
-                              Get.to(() => RegisterPage());
+                              ctrl.changeVisibility();
                             },
-                            child: const MyText(
-                              text: 'No Account? Signup',
-                              size: 12.0,
-                            ),
+                            icon: ctrl.isHidden
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off)),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: kWhiteColor,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            20.0,
+                          ),
+                          borderSide: const BorderSide(
+                            color: Colors.yellow,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Handle login logic here
+                        if (authCtrl.loginFormKey.currentState!.validate()) {
+                          authCtrl.loginUserWithFirebase(
+                              authCtrl.emailCtrl.text, authCtrl.passCtrl.text);
+                        }
+                      },
+                      child: const Text('Login'),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Handle login logic here
+                        // if (authCtrl.loginFormKey.currentState!.validate()) {
+                        //   authCtrl.loginUserWithFirebase(
+                        //       authCtrl.emailCtrl.text, authCtrl.passCtrl.text);
+                        // }
+                        authCtrl.signInUserWithGoogle();
+                      },
+                      child: const Text('Continue With Google'),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: TextButton(
+                              onPressed: () {
+                                // Handle forgot password logic here
+                              },
+                              child: const MyText(
+                                text: 'Forgot Password?',
+                                size: 12.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {
+                                Get.to(() => RegisterPage());
+                              },
+                              child: const MyText(
+                                text: 'No Account? Signup',
+                                size: 12.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
